@@ -1,6 +1,5 @@
 
 \.vs/
 
-DronZone-API/obj/
-
-DronZone-API/bin/
+bin/
+obj/
