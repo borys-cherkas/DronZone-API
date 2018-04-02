@@ -22,8 +22,6 @@ namespace DronZone_API
         {
             services.AddMvc();
 
-            services.AddScoped<IDbInitializer, DbInitializer>();
-
             DronZone_API.Infrastructure.DiRegistrator.Register(services);
 
             Mapper.Initialize(DronZone_API.Infrastructure.MappingsRegistrator.RegisterMappings);

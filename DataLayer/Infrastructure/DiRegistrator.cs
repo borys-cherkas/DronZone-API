@@ -1,4 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Common.Constants;
+using DataLayer.DbContext;
+using DataLayer.DbContext.Abstractions;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DataLayer.Infrastructure
 {
@@ -7,7 +11,9 @@ namespace DataLayer.Infrastructure
     {
         public static void Register(IServiceCollection services)
         {
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(DbConstants.LocalConnectionString));
 
+            services.AddScoped<IDbInitializer, DbInitializer>();
         }
     }
 }

@@ -25,6 +25,9 @@ namespace DataLayer.DbContext
 
         public DbSet<ZoneSettings> ZoneSettingsSet { get; set; }
 
+        public DbSet<DroneCharacteristics> DroneCharacteristicsSet { get; set; }
+
+        public DbSet<MapZone> MapZones { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -36,7 +39,7 @@ namespace DataLayer.DbContext
             base.OnModelCreating(builder);
 
             DisableCascadeDeleting(builder);
-
+            
             //builder.Entity<AppUser>()
             //    .HasOne(p => p.Participant)
             //    .WithOne(i => i.AppUser)

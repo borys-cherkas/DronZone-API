@@ -1,6 +1,8 @@
-﻿namespace Common.Models.Additional
+﻿using Common.Models.Additional;
+
+namespace Common.Models
 {
-    public class DroneCharacteristics
+    public class DroneCharacteristics : ModelBase<int>
     {
         public DroneType Type { get; set; }
 

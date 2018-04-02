@@ -1,5 +1,4 @@
 ﻿using System;
-using Common.Models.Additional;
 
 namespace Common.Models
 {
@@ -7,7 +6,9 @@ namespace Common.Models
     {
         public string DroneId { get; set; }
 
-        public MapPoint Position { get; set; }
+        // Position point
+        public string Altitude { get; set; }
+        public string Longitude { get; set; }
 
         // if position is not so accurate
         public double Radius { get; set; }
