@@ -1,11 +1,13 @@
 ﻿using System.Linq;
 using Common.Constants;
 using Common.Models;
+using Common.Models.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataLayer.DbContext
 {
-    public sealed class AppDbContext : Microsoft.EntityFrameworkCore.DbContext
+    public sealed class AppDbContext : IdentityDbContext<ApplicationUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options) { }
