@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using BusinessLayer.Services;
+using BusinessLayer.Services.Abstractions;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BusinessLayer.Infrastructure
 {
@@ -7,6 +9,8 @@ namespace BusinessLayer.Infrastructure
         public static void Register(IServiceCollection services)
         {
             DataLayer.Infrastructure.DiRegistrator.Register(services);
+
+            services.AddTransient<IPersonService, PersonService>();
         }
     }
 }

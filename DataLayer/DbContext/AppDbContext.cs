@@ -41,11 +41,12 @@ namespace DataLayer.DbContext
             base.OnModelCreating(builder);
 
             DisableCascadeDeleting(builder);
-            
-            //builder.Entity<AppUser>()
-            //    .HasOne(p => p.Participant)
-            //    .WithOne(i => i.AppUser)
-            //    .HasForeignKey<Participant>(b => b.AppUserId);
+
+            builder.Entity<ApplicationUser>()
+                .HasOne(p => p.Person)
+                .WithOne(i => i.IdentityUser)
+                .HasForeignKey<ApplicationUser>(b => b.PersonId)
+                .IsRequired();
 
             //builder.Entity<AthleticField>()
             //    .HasOne(m => m.EquipmentIntegrationRequest)

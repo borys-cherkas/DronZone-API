@@ -1,4 +1,5 @@
-﻿using AspNet.Security.OpenIdConnect.Primitives;
+﻿using AspNet.Security.OAuth.Validation;
+using AspNet.Security.OpenIdConnect.Primitives;
 using AutoMapper;
 using Common.Models.Identity;
 using DataLayer.DbContext;
@@ -56,7 +57,7 @@ namespace DronZone_API
                     options.EnableAuthorizationEndpoint("/connect/authorize")
                         .EnableLogoutEndpoint("/connect/logout")
                         .EnableTokenEndpoint("/connect/token")
-                        .EnableUserinfoEndpoint("/api/userinfo");
+                        .EnableUserinfoEndpoint("/connect/userinfo");
 
                     // Allow client applications to use the grant_type=password flow.
                     options.AllowPasswordFlow();
@@ -81,7 +82,10 @@ namespace DronZone_API
                 })
                 .AddValidation();
 
-            services.AddAuthentication();
+            services.AddAuthentication(opt =>
+                {
+                    opt.DefaultAuthenticateScheme = OAuthValidationDefaults.AuthenticationScheme;
+                });
 
             // If you prefer using JWT, don't forget to disable the automatic
             // JWT -> WS-Federation claims mapping used by the JWT middleware:

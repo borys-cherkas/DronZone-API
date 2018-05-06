@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Common.Constants;
 using DataLayer.DbContext.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
@@ -108,7 +109,7 @@ namespace DataLayer.DbContext
 
         private async Task InitializeRolesAsync()
         {
-            string[] roles = { "User", "Administrator" };
+            string[] roles = { AppRoles.User, AppRoles.Administrator };
 
             foreach (var role in roles)
             {
