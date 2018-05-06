@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Common.Constants;
+using Common.Models;
+using Common.Models.Identity;
 using DataLayer.DbContext.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using OpenIddict.Abstractions;
 using OpenIddict.Core;
 using OpenIddict.Models;
@@ -37,15 +40,18 @@ namespace DataLayer.DbContext
     {
         private readonly AppDbContext _dbContext;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly OpenIddictApplicationManager<OpenIddictApplication> _iddictApplicationManager;
 
         public DbInitializer(
             AppDbContext context, 
-            RoleManager<IdentityRole> roleManager, 
+            RoleManager<IdentityRole> roleManager,
+            UserManager<ApplicationUser> userManager,
             OpenIddictApplicationManager<OpenIddictApplication> iddictApplicationManager)
         {
             _dbContext = context;
             _roleManager = roleManager;
+            _userManager = userManager;
             _iddictApplicationManager = iddictApplicationManager;
         }
 
@@ -55,6 +61,7 @@ namespace DataLayer.DbContext
 
             await InitializeIdServAsync();
             await InitializeRolesAsync();
+            await InitializeUsersAsync();
         }
 
         private async Task InitializeIdServAsync()
@@ -121,6 +128,38 @@ namespace DataLayer.DbContext
                     // In the real world, there might be claims associated with roles
                     // _roleManager.AddClaimAsync(newRole, new )
                 }
+            }
+        }
+
+        private async Task InitializeUsersAsync()
+        {
+            var adminUsername1 = "admin1@test.com";
+            var adminUsername2 = "admin2@test.com";
+            var pass = "Test123!";
+
+            await AddUserIfNotExistAsync(adminUsername1, pass);
+            await AddUserIfNotExistAsync(adminUsername2, pass);
+        }
+
+        private async Task AddUserIfNotExistAsync(string username, string password)
+        {
+            var isExist = await _userManager.FindByEmailAsync(username) != null;
+            if (!isExist)
+            {
+                var person = new Person()
+                {
+                    FirstName = username,
+                    LastName = username
+                };
+                var result = await _dbContext.People.AddAsync(person);
+                person = result.Entity;
+                var admin1 = new ApplicationUser()
+                {
+                    UserName = username,
+                    Email = username,
+                    PersonId = person.Id
+                };
+                await _userManager.CreateAsync(admin1, password);
             }
         }
 
