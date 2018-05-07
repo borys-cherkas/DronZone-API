@@ -10,6 +10,7 @@ namespace BusinessLayer.Infrastructure
         {
             DataLayer.Infrastructure.DiRegistrator.Register(services);
 
+            services.AddTransient<IDroneFilterService, DroneFilterService>();
             services.AddTransient<IPersonService, PersonService>();
         }
     }

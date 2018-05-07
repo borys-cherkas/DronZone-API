@@ -25,6 +25,7 @@ namespace DataLayer.Infrastructure
                 options.UseOpenIddict();
             });
 
+            services.AddTransient<IDroneFilterRepository, DroneFilterRepository>();
             services.AddTransient<IPersonRepository, PersonRepository>();
 
             services.AddScoped<IDbInitializer, DbInitializer>();

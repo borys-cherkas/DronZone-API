@@ -29,6 +29,8 @@ namespace DataLayer.DbContext
 
         public DbSet<DroneCharacteristics> DroneCharacteristicsSet { get; set; }
 
+        public DbSet<DroneFilter> DroneFilters { get; set; }
+
         public DbSet<MapZone> MapZones { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
