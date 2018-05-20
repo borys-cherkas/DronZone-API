@@ -4,7 +4,7 @@ namespace Common.Models
 {
     public class Zone : ModelBase<string>
     {
-        public MapZone MapZone { get; set; }
+        public MapRectangle MapRectangle { get; set; }
 
         public string OwnerId { get; set; }
 

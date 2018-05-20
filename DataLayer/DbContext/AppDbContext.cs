@@ -31,7 +31,7 @@ namespace DataLayer.DbContext
 
         public DbSet<DroneFilter> DroneFilters { get; set; }
 
-        public DbSet<MapZone> MapZones { get; set; }
+        public DbSet<MapRectangle> MapRectangles { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -48,6 +48,12 @@ namespace DataLayer.DbContext
                 .HasOne(p => p.Person)
                 .WithOne(i => i.IdentityUser)
                 .HasForeignKey<ApplicationUser>(b => b.PersonId)
+                .IsRequired();
+
+            builder.Entity<Zone>()
+                .HasOne(p => p.MapRectangle)
+                .WithOne(i => i.Zone)
+                .HasForeignKey<MapRectangle>(b => b.ZoneId)
                 .IsRequired();
 
             //builder.Entity<AthleticField>()
