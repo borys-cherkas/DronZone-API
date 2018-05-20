@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Common.Models;
+using DronZone_API.ViewModels.Zone;
 
 namespace DronZone_API.Infrastructure
 {
@@ -13,9 +15,9 @@ namespace DronZone_API.Infrastructure
 
         private static void RegisterSomeEntityMappings(IMapperConfigurationExpression mapper)
         {
-            //mapper.CreateMap<AddKindOfSportViewModel, KindOfSport>()
-            //    .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.SportName))
-            //    .ReverseMap();
+            mapper.CreateMap<AddZoneViewModel, Zone>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.ZoneName))
+                .ForMember(dest => dest.MapRectangle, opt => opt.MapFrom(x => new MapRectangle {East = x.East, North = x.North, South = x.South, West = x.West}));
         }
     }
 }

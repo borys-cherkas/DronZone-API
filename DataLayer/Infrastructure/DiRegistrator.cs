@@ -27,6 +27,9 @@ namespace DataLayer.Infrastructure
 
             services.AddTransient<IDroneFilterRepository, DroneFilterRepository>();
             services.AddTransient<IPersonRepository, PersonRepository>();
+            services.AddTransient<IZoneRepository, ZoneRepository>();
+            services.AddTransient<IZoneSettingsRepository, ZoneSettingsRepository>();
+            services.AddTransient<IMapRectanglesRepository, MapRectanglesRepository>();
 
             services.AddScoped<IDbInitializer, DbInitializer>();
         }
