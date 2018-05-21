@@ -13,6 +13,7 @@ namespace BusinessLayer.Infrastructure
             services.AddTransient<IDroneFilterService, DroneFilterService>();
             services.AddTransient<IPersonService, PersonService>();
             services.AddTransient<IZoneService, ZoneService>();
+            services.AddTransient<IDroneService, DroneService>();
         }
     }
 }

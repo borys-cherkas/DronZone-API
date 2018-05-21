@@ -2,8 +2,9 @@
 {
     public class ZoneSettings : ModelBase<int>
     {
-        public string OwnerId { get; set; }
-        public Person Owner { get; set; }
+        public string ZoneId { get; set; }
+        public Zone Zone { get; set; }
+
 
         // filters
         // loggings

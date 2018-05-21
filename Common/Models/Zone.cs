@@ -1,4 +1,4 @@
-﻿using Common.Models.Additional;
+﻿using System.Collections.Generic;
 
 namespace Common.Models
 {
@@ -11,8 +11,7 @@ namespace Common.Models
         public string OwnerId { get; set; }
 
         public bool IsConfirmed { get; set; }
-
-        public int SettingsId { get; set; }
+        
         public ZoneSettings Settings { get; set; }
     }
 }

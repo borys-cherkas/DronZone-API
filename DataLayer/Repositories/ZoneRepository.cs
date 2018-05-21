@@ -4,7 +4,7 @@ using DataLayer.Repositories.Abstractions;
 
 namespace DataLayer.Repositories
 {
-    public class ZoneRepository : RepositoryBase<Zone>, IZoneRepository
+    public class ZoneRepository : RepositoryBase<Zone, string>, IZoneRepository
     {
         private readonly IZoneSettingsRepository _zoneSettingsRepository;
         private readonly IMapRectanglesRepository _mapRectanglesRepository;
@@ -21,7 +21,7 @@ namespace DataLayer.Repositories
 
         public override void Delete(Zone entity)
         {
-            var settings = _zoneSettingsRepository.GetSingleByPredicate(x => x.Id == entity.SettingsId);
+            var settings = _zoneSettingsRepository.GetSingleByPredicate(x => x.ZoneId == entity.Id);
             var mapRectangle = _mapRectanglesRepository.GetSingleByPredicate(x => x.ZoneId == entity.Id);
 
             using (var transaction = DbContext.Database.BeginTransaction())

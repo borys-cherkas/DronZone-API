@@ -13,10 +13,14 @@ namespace Common.Models
 
         public PersonType Type { get; set; }
 
+        #region Navigation Properties
+
         public IList<Zone> Zones { get; set; }
 
         public IList<Drone> Drones { get; set; }
 
         public ApplicationUser IdentityUser { get; set; }
+
+        #endregion
     }
 }

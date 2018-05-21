@@ -27,8 +27,6 @@ namespace DataLayer.DbContext
 
         public DbSet<ZoneSettings> ZoneSettingsSet { get; set; }
 
-        public DbSet<DroneCharacteristics> DroneCharacteristicsSet { get; set; }
-
         public DbSet<DroneFilter> DroneFilters { get; set; }
 
         public DbSet<MapRectangle> MapRectangles { get; set; }
@@ -44,26 +42,35 @@ namespace DataLayer.DbContext
 
             DisableCascadeDeleting(builder);
 
+            // one-to-one
             builder.Entity<ApplicationUser>()
                 .HasOne(p => p.Person)
                 .WithOne(i => i.IdentityUser)
                 .HasForeignKey<ApplicationUser>(b => b.PersonId)
                 .IsRequired();
 
+            // one-to-one
             builder.Entity<Zone>()
                 .HasOne(p => p.MapRectangle)
                 .WithOne(i => i.Zone)
                 .HasForeignKey<MapRectangle>(b => b.ZoneId)
                 .IsRequired();
 
+            // one-to-one
+            builder.Entity<Zone>()
+                .HasOne(p => p.Settings)
+                .WithOne(i => i.Zone)
+                .HasForeignKey<ZoneSettings>(b => b.ZoneId)
+                .IsRequired();
+
+            builder.Entity<Drone>()
+                .HasIndex(u => u.Code)
+                .IsUnique();
+
             //builder.Entity<AthleticField>()
             //    .HasOne(m => m.EquipmentIntegrationRequest)
             //    .WithOne(d => d.AthleticField)
             //    .IsRequired(false);
-
-            //builder.Entity<Reservation_Participant>()
-            //    .HasIndex(u => u.Code)
-            //    .IsUnique();
 
             //builder.Entity<Reservation_Participant>()
             //    .HasKey(x => new { x.ParticipantId, x.ReservationId });

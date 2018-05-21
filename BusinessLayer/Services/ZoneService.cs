@@ -40,12 +40,9 @@ namespace BusinessLayer.Services
 
         public Zone Add(Zone zone)
         {
-            if (zone.SettingsId == 0 && zone.Settings == null)
+            if (zone.Settings == null)
             {
-                zone.Settings = new ZoneSettings()
-                {
-                    OwnerId = zone.OwnerId
-                };
+                zone.Settings = new ZoneSettings();
             }
 
             var newZone = _zoneRepository.Add(zone);

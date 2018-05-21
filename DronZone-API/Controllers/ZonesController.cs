@@ -76,8 +76,11 @@ namespace DronZone_API.Controllers
             if (ModelState.IsValid)
             {
                 var zone = Mapper.Map<Zone>(model);
+
                 zone.OwnerId = currentPersonId;
-                zone.IsConfirmed = false;
+
+                //TODO: Change to 'false' when Admin confirmation is implemented
+                zone.IsConfirmed = true;
 
                 _zoneService.Add(zone);
 

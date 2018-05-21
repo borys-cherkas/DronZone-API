@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Common.Models;
 using DataLayer.DbContext;
 using DataLayer.Repositories.Abstractions;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataLayer.Repositories
 {
-    public class RepositoryBase<TEntity> : IRepositoryBase<TEntity>
-        where TEntity : class
+    public class RepositoryBase<TEntity, TKey> : IRepositoryBase<TEntity>
+        where TEntity : ModelBase<TKey>
     {
         protected readonly AppDbContext DbContext;
         protected readonly DbSet<TEntity> DbSet;
@@ -73,6 +74,8 @@ namespace DataLayer.Repositories
 
         public virtual TEntity Add(TEntity entity)
         {
+            entity.Created = DateTime.UtcNow;
+
             var entityEntry = DbSet.Add(entity);
             DbContext.SaveChanges();
 
