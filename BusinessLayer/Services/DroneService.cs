@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using BusinessLayer.Services.Abstractions;
 using Common.Models;
+using Common.Models.Additional;
 using DataLayer.Repositories.Abstractions;
 
 namespace BusinessLayer.Services
@@ -13,6 +14,11 @@ namespace BusinessLayer.Services
         public DroneService(IDroneRepository droneRepository)
         {
             _droneRepository = droneRepository;
+        }
+
+        public ICollection<Drone> GetDetachedDrones()
+        {
+            return _droneRepository.GetAll(x => string.IsNullOrEmpty(x.OwnerId));
         }
 
         public ICollection<Drone> GetDronesByPersonId(string personId)
@@ -67,6 +73,25 @@ namespace BusinessLayer.Services
             drone.OwnerId = null;
 
             _droneRepository.Update(drone);
+        }
+
+        public void GenerateDronesPack()
+        {
+            var rand = new Random();
+
+            for (int i = 0; i < 5; i++)
+            {
+                var drone = new Drone()
+                {
+                    Code = Guid.NewGuid().ToString(),
+                    MaxAvailableWeigth = rand.NextDouble() * 3,
+                    MaxSpeed = rand.NextDouble() * 20 + 12,
+                    Type = (DroneType)rand.Next(0, 3),
+                    Weigth = rand.NextDouble() * 2 + 0.3
+                };
+
+                _droneRepository.Add(drone);
+            }
         }
     }
 }

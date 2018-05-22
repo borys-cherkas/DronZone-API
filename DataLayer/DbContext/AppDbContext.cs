@@ -27,7 +27,7 @@ namespace DataLayer.DbContext
 
         public DbSet<ZoneSettings> ZoneSettingsSet { get; set; }
 
-        public DbSet<DroneFilter> DroneFilters { get; set; }
+        public DbSet<AreaFilter> AreaFilters { get; set; }
 
         public DbSet<MapRectangle> MapRectangles { get; set; }
 

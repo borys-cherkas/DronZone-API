@@ -12,38 +12,15 @@ using System;
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180521202724_ZoneFilters")]
+    partial class ZoneFilters
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.0.2-rtm-10011")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("Common.Models.AreaFilter", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("Created");
-
-                    b.Property<int>("DroneType");
-
-                    b.Property<double>("MaxAvailableWeigth");
-
-                    b.Property<double>("MaxDroneSpeed");
-
-                    b.Property<double>("MaxDroneWeigth");
-
-                    b.Property<int>("ZoneSettingsId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ZoneSettingsId");
-
-                    b.ToTable("AreaFilters");
-                });
 
             modelBuilder.Entity("Common.Models.Drone", b =>
                 {
@@ -75,6 +52,33 @@ namespace DataLayer.Migrations
                     b.HasIndex("OwnerId");
 
                     b.ToTable("Drones");
+                });
+
+            modelBuilder.Entity("Common.Models.DroneFilter", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<int>("DroneType");
+
+                    b.Property<double>("MaxAvailableWeigth");
+
+                    b.Property<double>("MaxDroneSpeed");
+
+                    b.Property<double>("MaxDroneWeigth");
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<int>("ZoneSettingsId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ZoneSettingsId");
+
+                    b.ToTable("DroneFilters");
                 });
 
             modelBuilder.Entity("Common.Models.DronePositionSnapshot", b =>
@@ -487,19 +491,19 @@ namespace DataLayer.Migrations
                     b.ToTable("OpenIddictTokens");
                 });
 
-            modelBuilder.Entity("Common.Models.AreaFilter", b =>
-                {
-                    b.HasOne("Common.Models.ZoneSettings", "ZoneSettings")
-                        .WithMany("AreaFilters")
-                        .HasForeignKey("ZoneSettingsId")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
             modelBuilder.Entity("Common.Models.Drone", b =>
                 {
                     b.HasOne("Common.Models.Person", "Owner")
                         .WithMany("Drones")
                         .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Common.Models.DroneFilter", b =>
+                {
+                    b.HasOne("Common.Models.ZoneSettings", "ZoneSettings")
+                        .WithMany("DroneFilter")
+                        .HasForeignKey("ZoneSettingsId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 

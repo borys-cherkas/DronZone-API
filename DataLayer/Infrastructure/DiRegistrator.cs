@@ -25,13 +25,13 @@ namespace DataLayer.Infrastructure
                 options.UseOpenIddict();
             });
 
-            services.AddTransient<IDroneFilterRepository, DroneFilterRepository>();
+            services.AddTransient<IAreaFilterRepository, AreaFilterRepository>();
             services.AddTransient<IPersonRepository, PersonRepository>();
             services.AddTransient<IDroneRepository, DroneRepository>();
             services.AddTransient<IZoneRepository, ZoneRepository>();
             services.AddTransient<IZoneSettingsRepository, ZoneSettingsRepository>();
             services.AddTransient<IMapRectanglesRepository, MapRectanglesRepository>();
-
+            
             services.AddScoped<IDbInitializer, DbInitializer>();
         }
     }

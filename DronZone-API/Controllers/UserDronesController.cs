@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using BusinessLayer.Services.Abstractions;
+using Common.Constants;
 using Common.Models.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -7,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DronZone_API.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = AppRoles.User)]
     [Route("api/[controller]/[action]")]
     public class UserDronesController : Controller
     {
@@ -33,12 +34,19 @@ namespace DronZone_API.Controllers
 
             var drones = _droneService.GetDronesByPersonId(person.Id);
 
+            foreach (var drone in drones)
+            {
+                drone.Owner = null;
+            }
+
             return Json(drones);
         }
 
         [HttpPost]
         public async Task<IActionResult> RegisterByCode(string code)
         {
+            code = code?.Trim();
+
             if (string.IsNullOrEmpty(code) || !_droneService.IsCodeValid(code))
             {
                 return BadRequest("invalid_data");

@@ -5,6 +5,8 @@ namespace BusinessLayer.Services.Abstractions
 {
     public interface IDroneService
     {
+        ICollection<Drone> GetDetachedDrones();
+
         ICollection<Drone> GetDronesByPersonId(string personId);
 
         Drone GetDroneByCode(string code);
@@ -14,5 +16,7 @@ namespace BusinessLayer.Services.Abstractions
         void AttachDroneToPerson(string personId, string code);
 
         void DetachDroneToPerson(string personId, string droneId);
+
+        void GenerateDronesPack();
     }
 }

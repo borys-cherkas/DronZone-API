@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Common.Models;
+using DronZone_API.ViewModels;
 using DronZone_API.ViewModels.Zone;
 
 namespace DronZone_API.Infrastructure
@@ -17,7 +18,9 @@ namespace DronZone_API.Infrastructure
         {
             mapper.CreateMap<AddZoneViewModel, Zone>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.ZoneName))
-                .ForMember(dest => dest.MapRectangle, opt => opt.MapFrom(x => new MapRectangle {East = x.East, North = x.North, South = x.South, West = x.West}));
+                .ForMember(dest => dest.MapRectangle, opt => opt.MapFrom(x => new MapRectangle { East = x.East, North = x.North, South = x.South, West = x.West }));
+
+            mapper.CreateMap<AddAreaFilterViewModel, AreaFilter>();
         }
     }
 }

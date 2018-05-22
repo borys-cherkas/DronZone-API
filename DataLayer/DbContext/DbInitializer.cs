@@ -137,11 +137,11 @@ namespace DataLayer.DbContext
             var adminUsername2 = "admin2@test.com";
             var pass = "Test123!";
 
-            await AddUserIfNotExistAsync(adminUsername1, pass);
-            await AddUserIfNotExistAsync(adminUsername2, pass);
+            await AddAdminIfNotExistAsync(adminUsername1, pass);
+            await AddAdminIfNotExistAsync(adminUsername2, pass);
         }
 
-        private async Task AddUserIfNotExistAsync(string username, string password)
+        private async Task AddAdminIfNotExistAsync(string username, string password)
         {
             var isExist = await _userManager.FindByEmailAsync(username) != null;
             if (!isExist)
@@ -160,6 +160,7 @@ namespace DataLayer.DbContext
                     PersonId = person.Id
                 };
                 await _userManager.CreateAsync(admin1, password);
+                await _userManager.AddToRoleAsync(admin1, AppRoles.Administrator);
             }
         }
 
