@@ -33,7 +33,7 @@ namespace DataLayer.DbContext
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(DbConstants.LocalConnectionString);
+            optionsBuilder.UseSqlServer(DbConstants.AzureConnectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

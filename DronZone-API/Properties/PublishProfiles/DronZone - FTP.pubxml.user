@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAlMEo9iD6D06i5WxhPdoeRgAAAAACAAAAAAAQZgAAAAEAACAAAAD6Dy8LPSUHhkG/9n8ptvIHvl7mBDGeorCVLC5W+w3skQAAAAAOgAAAAAIAACAAAABuyEo0G4HHmeQCKboeD9B3ssY/PP5qrj7m1D+7o62Hv4AAAAAFOWQfC3B3EWJWmfn19aQBTVdf8puMSHN3KjQilwY/I+eI+CFxa2Lpx8sE/EAQBV4Wb0xGE7FlViaH6yjyPI3BtZd1EtN0xhlVlZM7HeullzfhPwIeywfyEVpAS0KHEFyZ6EBNn2yynapDdAOZ8quzyKPHp+sFPYxIN51K2oBO10AAAABeNycPXiUR9xOx2/TpNhxDaORGOA98P3pT5WJz/57xYOdKy805gIR6JYDIg+7CL0dIyJm3zeZ4cBTkg4+g/rJl</EncryptedPassword>
+    <_PublishTargetUrl>ftp://waws-prod-dm1-083.ftp.azurewebsites.windows.net/site/wwwroot</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="appsettings.Development.json">
+      <publishTime>05/03/2018 19:44:12</publishTime>
+    </File>
+    <File Include="appsettings.json">
+      <publishTime>05/03/2018 19:44:12</publishTime>
+    </File>
+    <File Include="AspNet.Security.OAuth.Validation.dll">
+      <publishTime>02/19/2018 10:01:32</publishTime>
+    </File>
+    <File Include="AspNet.Security.OpenIdConnect.Extensions.dll">
+      <publishTime>02/07/2018 09:19:36</publishTime>
+    </File>
+    <File Include="AspNet.Security.OpenIdConnect.Primitives.dll">
+      <publishTime>02/07/2018 09:19:38</publishTime>
+    </File>
+    <File Include="AspNet.Security.OpenIdConnect.Server.dll">
+      <publishTime>02/07/2018 09:19:36</publishTime>
+    </File>
+    <File Include="AutoMapper.dll">
+      <publishTime>12/06/2017 15:08:08</publishTime>
+    </File>
+    <File Include="BusinessLayer.dll">
+      <publishTime>05/22/2018 10:58:17</publishTime>
+    </File>
+    <File Include="BusinessLayer.pdb">
+      <publishTime>05/22/2018 10:58:17</publishTime>
+    </File>
+    <File Include="Common.dll">
+      <publishTime>05/22/2018 10:58:14</publishTime>
+    </File>
+    <File Include="Common.pdb">
+      <publishTime>05/22/2018 10:58:14</publishTime>
+    </File>
+    <File Include="CryptoHelper.dll">
+      <publishTime>03/07/2018 10:07:22</publishTime>
+    </File>
+    <File Include="DataLayer.dll">
+      <publishTime>05/22/2018 10:58:16</publishTime>
+    </File>
+    <File Include="DataLayer.pdb">
+      <publishTime>05/22/2018 10:58:16</publishTime>
+    </File>
+    <File Include="DronZone-API.deps.json">
+      <publishTime>05/22/2018 10:58:25</publishTime>
+    </File>
+    <File Include="DronZone-API.dll">
+      <publishTime>05/22/2018 10:58:18</publishTime>
+    </File>
+    <File Include="DronZone-API.pdb">
+      <publishTime>05/22/2018 10:58:18</publishTime>
+    </File>
+    <File Include="DronZone-API.PrecompiledViews.dll">
+      <publishTime>05/22/2018 10:58:25</publishTime>
+    </File>
+    <File Include="DronZone-API.PrecompiledViews.pdb">
+      <publishTime>05/22/2018 10:58:25</publishTime>
+    </File>
+    <File Include="DronZone-API.runtimeconfig.json">
+      <publishTime>05/22/2018 10:58:25</publishTime>
+    </File>
+    <File Include="Newtonsoft.Json.dll">
+      <publishTime>04/02/2017 17:46:32</publishTime>
+    </File>
+    <File Include="OpenIddict.Abstractions.dll">
+      <publishTime>05/02/2018 15:21:12</publishTime>
+    </File>
+    <File Include="OpenIddict.Core.dll">
+      <publishTime>05/02/2018 15:21:12</publishTime>
+    </File>
+    <File Include="OpenIddict.dll">
+      <publishTime>05/02/2018 15:21:16</publishTime>
+    </File>
+    <File Include="OpenIddict.EntityFrameworkCore.dll">
+      <publishTime>05/02/2018 15:21:30</publishTime>
+    </File>
+    <File Include="OpenIddict.Models.dll">
+      <publishTime>05/02/2018 15:21:10</publishTime>
+    </File>
+    <File Include="OpenIddict.Mvc.dll">
+      <publishTime>05/02/2018 15:21:14</publishTime>
+    </File>
+    <File Include="OpenIddict.Server.dll">
+      <publishTime>05/02/2018 15:21:12</publishTime>
+    </File>
+    <File Include="OpenIddict.Stores.dll">
+      <publishTime>05/02/2018 15:21:16</publishTime>
+    </File>
+    <File Include="OpenIddict.Validation.dll">
+      <publishTime>05/02/2018 15:21:16</publishTime>
+    </File>
+    <File Include="web.config">
+      <publishTime>05/22/2018 10:58:25</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

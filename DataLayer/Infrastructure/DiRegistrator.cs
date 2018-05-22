@@ -17,7 +17,7 @@ namespace DataLayer.Infrastructure
         {
             services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseSqlServer(DbConstants.LocalConnectionString);
+                options.UseSqlServer(DbConstants.AzureConnectionString);
 
                 // Register the entity sets needed by OpenIddict.
                 // Note: use the generic overload if you need
