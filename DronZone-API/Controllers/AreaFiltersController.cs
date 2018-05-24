@@ -1,8 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using BusinessLayer.Services.Abstractions;
 using Common.Models;
 using DronZone_API.ViewModels;
+using DronZone_API.ViewModels.Filter;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,10 +21,21 @@ namespace DronZone_API.Controllers
             _areaFilterService = areaFilterService;
         }
 
+        public async Task<IActionResult> GetFilterById(int id)
+        {
+            var filterModel = await _areaFilterService.GetFilterByIdAsync(id);
+            var filterViewModel = Mapper.Map<FilterDetailedViewModel>(filterModel);
+            filterViewModel.AreaId = await _areaFilterService.GetAreaIdByFilterIdAsync(filterViewModel.Id);
+
+            return Json(filterViewModel);
+        }
+
         public async Task<IActionResult> GetAreaFilters(string id)
         {
-            var filters = await _areaFilterService.GetAreaFiltersAsync(id);
-            return Json(filters);
+            var filterModels = await _areaFilterService.GetAreaFiltersAsync(id);
+            var filterViewModelList = Mapper.Map<ICollection<FilterDetailedViewModel>>(filterModels);
+
+            return Json(filterViewModelList);
         }
 
         [HttpPost]

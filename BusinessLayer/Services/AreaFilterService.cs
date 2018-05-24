@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLayer.Services
 {
-    public class AreaFilterService  : IAreaFilterService
+    public class AreaFilterService : IAreaFilterService
     {
         private readonly IAreaFilterRepository _areaFilterRepository;
         private readonly IZoneService _zoneService;
@@ -16,6 +16,18 @@ namespace BusinessLayer.Services
         {
             _areaFilterRepository = areaFilterRepository;
             _zoneService = zoneService;
+        }
+
+        public Task<AreaFilter> GetFilterByIdAsync(int filterId)
+        {
+            var filter = _areaFilterRepository.GetSingleByPredicate(x => x.Id == filterId);
+            return Task.FromResult(filter);
+        }
+
+        public Task<string> GetAreaIdByFilterIdAsync(int filterId)
+        {
+            var filter = _areaFilterRepository.GetSingleByPredicate(x => x.Id == filterId, q => q.Include(x => x.ZoneSettings));
+            return Task.FromResult(filter.ZoneSettings.ZoneId);
         }
 
         public async Task<ICollection<AreaFilter>> GetAreaFiltersAsync(string areaId)

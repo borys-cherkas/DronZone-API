@@ -6,6 +6,10 @@ namespace BusinessLayer.Services.Abstractions
 {
     public interface IAreaFilterService
     {
+        Task<AreaFilter> GetFilterByIdAsync(int filterId);
+
+        Task<string> GetAreaIdByFilterIdAsync(int filterId);
+
         Task<ICollection<AreaFilter>> GetAreaFiltersAsync(string areaId);
 
         Task<AreaFilter> CreateAsync(AreaFilter entity, string areaId);
