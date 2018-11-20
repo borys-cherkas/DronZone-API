@@ -66,14 +66,6 @@ namespace DataLayer.DbContext
             builder.Entity<Drone>()
                 .HasIndex(u => u.Code)
                 .IsUnique();
-
-            //builder.Entity<AthleticField>()
-            //    .HasOne(m => m.EquipmentIntegrationRequest)
-            //    .WithOne(d => d.AthleticField)
-            //    .IsRequired(false);
-
-            //builder.Entity<Reservation_Participant>()
-            //    .HasKey(x => new { x.ParticipantId, x.ReservationId });
         }
 
         private void DisableCascadeDeleting(ModelBuilder modelBuilder)

@@ -1,4 +1,6 @@
-﻿using AspNet.Security.OAuth.Validation;
+﻿using System;
+using System.Threading.Tasks;
+using AspNet.Security.OAuth.Validation;
 using AspNet.Security.OpenIdConnect.Primitives;
 using AutoMapper;
 using Common.Models.Identity;
@@ -8,7 +10,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using OpenIddict.Abstractions;
+using OpenIddict.EntityFrameworkCore.Models;
 
 namespace DronZone_API
 {
@@ -32,6 +37,9 @@ namespace DronZone_API
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
 
+            // Configure Identity to use the same JWT claims as OpenIddict instead
+            // of the legacy WS-Federation claims it uses by default (ClaimTypes),
+            // which saves you from doing the mapping in your authorization controller.
             services.Configure<IdentityOptions>(options =>
             {
                 options.ClaimsIdentity.UserNameClaimType = OpenIdConnectConstants.Claims.Name;
@@ -43,42 +51,33 @@ namespace DronZone_API
             services.AddOpenIddict()
                 .AddCore(options =>
                 {
-                    options.UseDefaultModels();
-                    options.AddEntityFrameworkCoreStores<AppDbContext>();
+                    options.UseEntityFrameworkCore()
+                        .UseDbContext<AppDbContext>();
                 })
                 .AddServer(options =>
                 {
                     // Register the ASP.NET Core MVC binder used by OpenIddict.
                     // Note: if you don't call this method, you won't be able to
                     // bind OpenIdConnectRequest or OpenIdConnectResponse parameters.
-                    options.AddMvcBinders();
+                    options.UseMvc();
 
                     // Enable the authorization, logout, token and userinfo endpoints.
-                    options.EnableAuthorizationEndpoint("/connect/authorize")
-                        .EnableLogoutEndpoint("/connect/logout")
-                        .EnableTokenEndpoint("/connect/token")
+                    options.EnableTokenEndpoint("/connect/token")
                         .EnableUserinfoEndpoint("/connect/userinfo");
 
                     // Allow client applications to use the grant_type=password flow.
                     options.AllowPasswordFlow();
+
+                    // Accept anonymous clients (i.e clients that don't send a client_id).
+                    options.AcceptAnonymousClients();
 
                     // Mark the "email", "profile" and "roles" scopes as supported scopes.
                     options.RegisterScopes(OpenIdConnectConstants.Scopes.Email,
                         OpenIdConnectConstants.Scopes.Profile,
                         OpenIddictConstants.Scopes.Roles);
 
-                    // Make the "client_id" parameter mandatory when sending a token request.
-                    options.RequireClientIdentification();
-
-                    // Enable scope validation, so that authorization and token requests
-                    // that specify unregistered scopes are automatically rejected.
-                    options.EnableScopeValidation();
-
                     // During development, you can disable the HTTPS requirement.
                     options.DisableHttpsRequirement();
-
-                    //options.UseJsonWebTokens();
-                    //options.AddEphemeralSigningKey();
                 })
                 .AddValidation();
 

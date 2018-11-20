@@ -17,7 +17,7 @@ namespace DataLayer.Infrastructure
         {
             services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseSqlServer(DbConstants.AzureConnectionString);
+                options.UseSqlServer(DbConstants.AzureConnectionString, b => b.MigrationsAssembly("DronZone-API"));
 
                 // Register the entity sets needed by OpenIddict.
                 // Note: use the generic overload if you need
