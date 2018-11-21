@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
 using AspNet.Security.OAuth.Validation;
 using AspNet.Security.OpenIdConnect.Primitives;
@@ -30,6 +32,14 @@ namespace DronZone_API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            // StackOverflow solution - https://stackoverflow.com/questions/44688311/how-to-set-culture-for-date-binding-in-asp-net-core
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture(CultureInfo.InvariantCulture);
+                options.SupportedCultures = new List<CultureInfo> {CultureInfo.InvariantCulture};
+                options.RequestCultureProviders.Clear();
+            });
 
             Infrastructure.DiRegistrator.Register(services);
 
@@ -112,6 +122,8 @@ namespace DronZone_API
             app.UseStaticFiles();
 
             app.UseAuthentication();
+
+            app.UseRequestLocalization();
 
             app.UseMvc();
         }
