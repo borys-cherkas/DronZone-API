@@ -81,8 +81,35 @@ namespace DronZone_API.Controllers
 
                 //TODO: Change to 'false' when Admin confirmation is implemented
                 zone.IsConfirmed = true;
+                
+                return Ok();
+            }
 
-                _zoneService.Add(zone);
+            return BadRequest();
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update(EditZoneViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var currentIdentityUser = await _userManager.GetUserAsync(User);
+                var currentPersonId = currentIdentityUser.PersonId;
+
+                var zoneToUpdate = _zoneService.GetZoneById(model.ZoneId);
+
+                if (zoneToUpdate == null)
+                {
+                    return BadRequest("There is no zone with such identified.");
+                }
+
+                if (zoneToUpdate.OwnerId != currentPersonId)
+                {
+                    return BadRequest("You haven't permissions to modify this zone.");
+                }
+
+                var mappedZone = Mapper.Map<Zone>(model);
+                _zoneService.Update(mappedZone);
 
                 return Ok();
             }

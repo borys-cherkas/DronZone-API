@@ -17,6 +17,8 @@ namespace BusinessLayer.Services.Abstractions
 
         Zone Add(Zone zone);
 
+        void Update(Zone zone);
+
         void Delete(string zoneId);
     }
 }

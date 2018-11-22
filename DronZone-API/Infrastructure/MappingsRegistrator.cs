@@ -27,6 +27,17 @@ namespace DronZone_API.Infrastructure
                     BottomRightLongitude = x.BottomRightLongitude
                 }));
 
+            mapper.CreateMap<EditZoneViewModel, Zone>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ZoneId))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.ZoneName))
+                .ForMember(dest => dest.MapRectangle, opt => opt.MapFrom(x => new MapRectangle
+                {
+                    TopLeftLatitude = x.TopLeftLatitude,
+                    TopLeftLongitude = x.TopLeftLongitude,
+                    BottomRightLatitude = x.BottomRightLatitude,
+                    BottomRightLongitude = x.BottomRightLongitude
+                }));
+
             mapper.CreateMap<AddAreaFilterViewModel, AreaFilter>();
 
             mapper.CreateMap<AreaFilter, FilterDetailedViewModel>();

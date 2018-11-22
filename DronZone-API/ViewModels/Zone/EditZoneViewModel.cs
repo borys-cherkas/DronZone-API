@@ -2,8 +2,11 @@
 
 namespace DronZone_API.ViewModels.Zone
 {
-    public class AddZoneViewModel
+    public class EditZoneViewModel
     {
+        [Required]
+        public string ZoneId { get; set; }
+
         [Required]
         public string ZoneName { get; set; }
 

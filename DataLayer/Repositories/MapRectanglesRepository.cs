@@ -10,5 +10,10 @@ namespace DataLayer.Repositories
             : base(appDbContext, appDbContext.MapRectangles)
         {
         }
+
+        public MapRectangle GetByZoneId(string zoneId)
+        {
+            return GetSingleByPredicate(x => x.ZoneId == zoneId);
+        }
     }
 }
