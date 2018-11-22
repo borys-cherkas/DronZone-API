@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
+using BusinessLayer.Filters;
 using BusinessLayer.Services.Abstractions;
 using Common.Models;
 using DataLayer.Repositories.Abstractions;
@@ -36,9 +38,11 @@ namespace BusinessLayer.Services
             return _zoneRepository.GetAll(x => !x.IsConfirmed);
         }
 
-        public ICollection<Zone> GetZonesByPersonId(string personId)
+        public ICollection<Zone> GetZonesByPersonId(string personId, ZoneListFilter filter)
         {
-            return _zoneRepository.GetAll(x => x.OwnerId == personId);
+            var zones = _zoneRepository.GetAll(x => x.OwnerId == personId);
+
+            return FilterZones(zones, filter);
         }
 
         public Zone Add(Zone zone)
@@ -86,6 +90,27 @@ namespace BusinessLayer.Services
             }
 
             _zoneRepository.Delete(zone);
+        }
+
+        private ICollection<Zone> FilterZones(ICollection<Zone> unfilteredZones, ZoneListFilter filter)
+        {
+            IEnumerable<Zone> filteredList = unfilteredZones;
+
+            //TODO: Of course it's better to move this filtering inside SQL query but it's boring now :)
+            if (filter != null)
+            {
+                if (!string.IsNullOrEmpty(filter.ZoneName))
+                {
+                    filteredList = filteredList.Where(x => x.Name.ToLower().Contains(filter.ZoneName.ToLower()));
+                }
+
+                if (filter.Confirmed != null)
+                {
+                    filteredList = filteredList.Where(x => x.IsConfirmed == filter.Confirmed);
+                }
+            }
+
+            return filteredList.ToList();
         }
     }
 }

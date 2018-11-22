@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BusinessLayer.Filters;
 using Common.Models;
 
 namespace BusinessLayer.Services.Abstractions
@@ -13,7 +14,7 @@ namespace BusinessLayer.Services.Abstractions
 
         ICollection<Zone> GetAllUnconfirmedZones();
 
-        ICollection<Zone> GetZonesByPersonId(string personId);
+        ICollection<Zone> GetZonesByPersonId(string personId, ZoneListFilter filter);
 
         Zone Add(Zone zone);
 

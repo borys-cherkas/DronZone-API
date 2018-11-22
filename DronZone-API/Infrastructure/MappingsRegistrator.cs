@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using BusinessLayer.Filters;
 using Common.Models;
 using DronZone_API.ViewModels;
 using DronZone_API.ViewModels.Filter;
+using DronZone_API.ViewModels.Filter.List;
 using DronZone_API.ViewModels.Zone;
 
 namespace DronZone_API.Infrastructure
@@ -37,6 +39,9 @@ namespace DronZone_API.Infrastructure
                     BottomRightLatitude = x.BottomRightLatitude,
                     BottomRightLongitude = x.BottomRightLongitude
                 }));
+
+            mapper.CreateMap<ZoneListFilterViewModel, ZoneListFilter>()
+                .ReverseMap();
 
             mapper.CreateMap<AddAreaFilterViewModel, AreaFilter>();
 

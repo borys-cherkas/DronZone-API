@@ -1,9 +1,11 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
+using BusinessLayer.Filters;
 using BusinessLayer.Services.Abstractions;
 using Common.Constants;
 using Common.Models;
 using Common.Models.Identity;
+using DronZone_API.ViewModels.Filter.List;
 using DronZone_API.ViewModels.Zone;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -58,12 +60,13 @@ namespace DronZone_API.Controllers
         //}
 
         [HttpGet]
-        public async Task<IActionResult> GetAllUserZones()
+        public async Task<IActionResult> GetAllUserZones(ZoneListFilterViewModel filterViewModel)
         {
             var currentIdentityUser = await _userManager.GetUserAsync(User);
             var currentPersonId = currentIdentityUser.PersonId;
 
-            var zones = _zoneService.GetZonesByPersonId(currentPersonId);
+            var filter = Mapper.Map<ZoneListFilter>(filterViewModel);
+            var zones = _zoneService.GetZonesByPersonId(currentPersonId, filter);
             return Json(zones);
         }
 
