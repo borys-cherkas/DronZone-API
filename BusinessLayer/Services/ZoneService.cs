@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using BusinessLayer.Filters;
 using BusinessLayer.Services.Abstractions;
 using Common.Models;
@@ -15,11 +13,16 @@ namespace BusinessLayer.Services
     public class ZoneService : IZoneService
     {
         private readonly IZoneRepository _zoneRepository;
+        private readonly IZoneValidationRequestRepository _zoneValidationRequestRepository;
         private readonly IMapRectanglesRepository _mapRectanglesRepository;
 
-        public ZoneService(IZoneRepository zoneRepository, IMapRectanglesRepository mapRectanglesRepository)
+        public ZoneService(
+            IZoneRepository zoneRepository,
+            IZoneValidationRequestRepository zoneValidationRequestRepository, 
+            IMapRectanglesRepository mapRectanglesRepository)
         {
             _zoneRepository = zoneRepository;
+            _zoneValidationRequestRepository = zoneValidationRequestRepository;
             _mapRectanglesRepository = mapRectanglesRepository;
         }
 
@@ -40,7 +43,7 @@ namespace BusinessLayer.Services
 
         public ICollection<Zone> GetZonesByPersonId(string personId, ZoneListFilter filter)
         {
-            var zones = _zoneRepository.GetAll(x => x.OwnerId == personId);
+            var zones = _zoneRepository.GetAll(x => x.OwnerId == personId && x.IsConfirmed);
 
             return FilterZones(zones, filter);
         }
@@ -81,13 +84,15 @@ namespace BusinessLayer.Services
             _mapRectanglesRepository.Update(mapRectangleToUpdate);
         }
 
-        public void Delete(string zoneId)
+        public void DeleteWithValidationRequests(string zoneId)
         {
             var zone = GetZoneById(zoneId, q => q.Include(x => x.Settings).Include(x => x.MapRectangle));
             if (zone == null)
             {
                 return;
             }
+
+            _zoneValidationRequestRepository.DeleteAllZoneRequests(zoneId);
 
             _zoneRepository.Delete(zone);
         }

@@ -4,7 +4,8 @@
     {
         WaitingForAdministrator = 100,
         InProgress = 200,
-        Confirmed = 300,
-        Declined = 400
+        Declined = 300,
+        Confirmed = 400,
+        Canceled = 500
     }
 }

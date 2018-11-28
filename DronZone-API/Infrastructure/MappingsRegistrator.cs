@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BusinessLayer.Filters;
 using Common.Models;
+using Common.Models.Additional;
 using DronZone_API.ViewModels;
 using DronZone_API.ViewModels.Filter;
 using DronZone_API.ViewModels.Filter.List;
@@ -19,26 +20,16 @@ namespace DronZone_API.Infrastructure
 
         private static void RegisterSomeEntityMappings(IMapperConfigurationExpression mapper)
         {
-            mapper.CreateMap<AddZoneViewModel, Zone>()
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.ZoneName))
-                .ForMember(dest => dest.MapRectangle, opt => opt.MapFrom(x => new MapRectangle
-                {
-                    TopLeftLatitude = x.TopLeftLatitude,
-                    TopLeftLongitude = x.TopLeftLongitude,
-                    BottomRightLatitude = x.BottomRightLatitude,
-                    BottomRightLongitude = x.BottomRightLongitude
-                }));
+            mapper.CreateMap<AddZoneValidationRequestViewModel, ZoneValidationRequest>()
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(x => ZoneValidationStatus.WaitingForAdministrator))
+                .ForMember(dest => dest.RequestType, opt => opt.MapFrom(x => ZoneValidationType.Creation))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Reason));
 
-            mapper.CreateMap<EditZoneViewModel, Zone>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ZoneId))
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.ZoneName))
-                .ForMember(dest => dest.MapRectangle, opt => opt.MapFrom(x => new MapRectangle
-                {
-                    TopLeftLatitude = x.TopLeftLatitude,
-                    TopLeftLongitude = x.TopLeftLongitude,
-                    BottomRightLatitude = x.BottomRightLatitude,
-                    BottomRightLongitude = x.BottomRightLongitude
-                }));
+            mapper.CreateMap<ModifyZoneValidationRequestViewModel, ZoneValidationRequest>()
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(x => ZoneValidationStatus.WaitingForAdministrator))
+                .ForMember(dest => dest.RequestType, opt => opt.MapFrom(x => ZoneValidationType.Modifying))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Reason))
+                .ForMember(dest => dest.TargetZoneId, opt => opt.MapFrom(src => src.ZoneId));
 
             mapper.CreateMap<ZoneListFilterViewModel, ZoneListFilter>()
                 .ReverseMap();

@@ -3,10 +3,8 @@ using AutoMapper;
 using BusinessLayer.Filters;
 using BusinessLayer.Services.Abstractions;
 using Common.Constants;
-using Common.Models;
 using Common.Models.Identity;
 using DronZone_API.ViewModels.Filter.List;
-using DronZone_API.ViewModels.Zone;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -37,6 +35,9 @@ namespace DronZone_API.Controllers
             }
 
             var zone = _zoneService.GetZoneById(id, q => q.Include(x => x.MapRectangle));
+
+            // TODO: Try to replace with this line and pass it to the Json(): 
+            // new JsonSerializerSettings().ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             zone.MapRectangle.Zone = null;
             return Json(zone);
         }
@@ -48,16 +49,6 @@ namespace DronZone_API.Controllers
             var zones = _zoneService.GetAllUnconfirmedZones();
             return Json(zones);
         }
-
-        //[HttpGet]
-        //public async Task<IActionResult> GetConfirmedUserZones()
-        //{
-        //    var currentIdentityUser = await _userManager.GetUserAsync(User);
-        //    var currentPersonId = currentIdentityUser.PersonId;
-
-        //    var zones = _zoneService.GetZonesByPersonId(currentPersonId);
-        //    return Json(zones);
-        //}
 
         [HttpGet]
         public async Task<IActionResult> GetAllUserZones(ZoneListFilterViewModel filterViewModel)
@@ -71,59 +62,9 @@ namespace DronZone_API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(AddZoneViewModel model)
-        {
-            var currentIdentityUser = await _userManager.GetUserAsync(User);
-            var currentPersonId = currentIdentityUser.PersonId;
-
-            if (ModelState.IsValid)
-            {
-                var zone = Mapper.Map<Zone>(model);
-
-                zone.OwnerId = currentPersonId;
-
-                //TODO: Change to 'false' when Admin confirmation is implemented
-                zone.IsConfirmed = true;
-                
-                return Ok();
-            }
-
-            return BadRequest();
-        }
-
-        [HttpPut]
-        public async Task<IActionResult> Update(EditZoneViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var currentIdentityUser = await _userManager.GetUserAsync(User);
-                var currentPersonId = currentIdentityUser.PersonId;
-
-                var zoneToUpdate = _zoneService.GetZoneById(model.ZoneId);
-
-                if (zoneToUpdate == null)
-                {
-                    return BadRequest("There is no zone with such identified.");
-                }
-
-                if (zoneToUpdate.OwnerId != currentPersonId)
-                {
-                    return BadRequest("You haven't permissions to modify this zone.");
-                }
-
-                var mappedZone = Mapper.Map<Zone>(model);
-                _zoneService.Update(mappedZone);
-
-                return Ok();
-            }
-
-            return BadRequest();
-        }
-
-        [HttpPost]
         public IActionResult Delete(string id)
         {
-            _zoneService.Delete(id);
+            _zoneService.DeleteWithValidationRequests(id);
 
             return Ok();
         }

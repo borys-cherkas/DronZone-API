@@ -61,9 +61,9 @@ namespace DataLayer.DbContext
             // one-to-one
             builder.Entity<Zone>()
                 .HasOne(z => z.ValidationRequest)
-                .WithOne(vr => vr.Zone)
-                .HasForeignKey<ZoneValidationRequest>(b => b.ZoneId)
-                .IsRequired();
+                .WithOne()
+                .HasForeignKey<ZoneValidationRequest>(b => b.TargetZoneId)
+                .IsRequired(false);
 
             // one-to-one
             builder.Entity<Zone>()

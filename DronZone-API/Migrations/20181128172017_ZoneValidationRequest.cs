@@ -44,27 +44,34 @@ namespace DronZone_API.Migrations
                     Id = table.Column<string>(nullable: false),
                     Created = table.Column<DateTime>(nullable: false),
                     Status = table.Column<int>(nullable: false),
-                    AdministratorId = table.Column<string>(nullable: true),
-                    ZoneId = table.Column<string>(nullable: false),
+                    RequesterId = table.Column<string>(nullable: true),
+                    ResponsiblePersonId = table.Column<string>(nullable: true),
                     RequestType = table.Column<int>(nullable: false),
-                    Description = table.Column<string>(nullable: true)
+                    Description = table.Column<string>(nullable: true),
+                    TargetZoneId = table.Column<string>(nullable: true),
+                    ZoneName = table.Column<string>(nullable: true),
+                    TopLeftLatitude = table.Column<double>(nullable: false),
+                    TopLeftLongitude = table.Column<double>(nullable: false),
+                    BottomRightLatitude = table.Column<double>(nullable: false),
+                    BottomRightLongitude = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ZoneValidationRequests", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ZoneValidationRequests_Zones_ZoneId",
-                        column: x => x.ZoneId,
+                        name: "FK_ZoneValidationRequests_Zones_TargetZoneId",
+                        column: x => x.TargetZoneId,
                         principalTable: "Zones",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ZoneValidationRequests_ZoneId",
+                name: "IX_ZoneValidationRequests_TargetZoneId",
                 table: "ZoneValidationRequests",
-                column: "ZoneId",
-                unique: true);
+                column: "TargetZoneId",
+                unique: true,
+                filter: "[TargetZoneId] IS NOT NULL");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_MapRectangles_Zones_ZoneId",

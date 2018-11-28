@@ -20,6 +20,6 @@ namespace BusinessLayer.Services.Abstractions
 
         void Update(Zone zone);
 
-        void Delete(string zoneId);
+        void DeleteWithValidationRequests(string zoneId);
     }
 }

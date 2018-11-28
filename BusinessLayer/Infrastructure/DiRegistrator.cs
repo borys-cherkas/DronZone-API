@@ -14,6 +14,7 @@ namespace BusinessLayer.Infrastructure
             services.AddTransient<IPersonService, PersonService>();
             services.AddTransient<IZoneService, ZoneService>();
             services.AddTransient<IDroneService, DroneService>();
+            services.AddTransient<IZoneValidationRequestService, ZoneValidationRequestService>();
         }
     }
 }

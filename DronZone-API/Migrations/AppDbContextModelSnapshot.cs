@@ -249,7 +249,9 @@ namespace DronZone_API.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AdministratorId");
+                    b.Property<double>("BottomRightLatitude");
+
+                    b.Property<double>("BottomRightLongitude");
 
                     b.Property<DateTime>("Created");
 
@@ -257,15 +259,25 @@ namespace DronZone_API.Migrations
 
                     b.Property<int>("RequestType");
 
+                    b.Property<string>("RequesterId");
+
+                    b.Property<string>("ResponsiblePersonId");
+
                     b.Property<int>("Status");
 
-                    b.Property<string>("ZoneId")
-                        .IsRequired();
+                    b.Property<string>("TargetZoneId");
+
+                    b.Property<double>("TopLeftLatitude");
+
+                    b.Property<double>("TopLeftLongitude");
+
+                    b.Property<string>("ZoneName");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ZoneId")
-                        .IsUnique();
+                    b.HasIndex("TargetZoneId")
+                        .IsUnique()
+                        .HasFilter("[TargetZoneId] IS NOT NULL");
 
                     b.ToTable("ZoneValidationRequests");
                 });
@@ -589,9 +601,9 @@ namespace DronZone_API.Migrations
 
             modelBuilder.Entity("Common.Models.ZoneValidationRequest", b =>
                 {
-                    b.HasOne("Common.Models.Zone", "Zone")
+                    b.HasOne("Common.Models.Zone")
                         .WithOne("ValidationRequest")
-                        .HasForeignKey("Common.Models.ZoneValidationRequest", "ZoneId")
+                        .HasForeignKey("Common.Models.ZoneValidationRequest", "TargetZoneId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
