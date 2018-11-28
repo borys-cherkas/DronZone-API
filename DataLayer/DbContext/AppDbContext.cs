@@ -23,7 +23,9 @@ namespace DataLayer.DbContext
 
         public DbSet<Person> People { get; set; }
 
-        public DbSet<Zone> RegisteredZones { get; set; }
+        public DbSet<Zone> Zones { get; set; }
+
+        public DbSet<ZoneValidationRequest> ZoneValidationRequests { get; set; }
 
         public DbSet<ZoneSettings> ZoneSettingsSet { get; set; }
 
@@ -54,6 +56,13 @@ namespace DataLayer.DbContext
                 .HasOne(p => p.MapRectangle)
                 .WithOne(i => i.Zone)
                 .HasForeignKey<MapRectangle>(b => b.ZoneId)
+                .IsRequired();
+
+            // one-to-one
+            builder.Entity<Zone>()
+                .HasOne(z => z.ValidationRequest)
+                .WithOne(vr => vr.Zone)
+                .HasForeignKey<ZoneValidationRequest>(b => b.ZoneId)
                 .IsRequired();
 
             // one-to-one

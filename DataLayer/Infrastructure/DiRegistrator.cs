@@ -1,10 +1,8 @@
 ﻿using Common.Constants;
-using Common.Models.Identity;
 using DataLayer.DbContext;
 using DataLayer.DbContext.Abstractions;
 using DataLayer.Repositories;
 using DataLayer.Repositories.Abstractions;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -31,6 +29,7 @@ namespace DataLayer.Infrastructure
             services.AddTransient<IZoneRepository, ZoneRepository>();
             services.AddTransient<IZoneSettingsRepository, ZoneSettingsRepository>();
             services.AddTransient<IMapRectanglesRepository, MapRectanglesRepository>();
+            services.AddTransient<IZoneValidationRequestRepository, ZoneValidationRequestRepository>();
             
             services.AddScoped<IDbInitializer, DbInitializer>();
         }

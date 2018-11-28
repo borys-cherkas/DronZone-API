@@ -15,7 +15,7 @@ namespace DataLayer.Repositories
             IZoneSettingsRepository zoneSettingsRepository,
             IAreaFilterRepository areaFilterRepository,
             IMapRectanglesRepository mapRectanglesRepository)
-            : base(appDbContext, appDbContext.RegisteredZones)
+            : base(appDbContext, appDbContext.Zones)
         {
             _zoneSettingsRepository = zoneSettingsRepository;
             _areaFilterRepository = areaFilterRepository;
@@ -33,7 +33,7 @@ namespace DataLayer.Repositories
                 DbContext.AreaFilters.RemoveRange(filters);
                 DbContext.ZoneSettingsSet.Remove(settings);
                 DbContext.MapRectangles.Remove(mapRectangle);
-                DbContext.RegisteredZones.Remove(entity);
+                DbContext.Zones.Remove(entity);
                 DbContext.SaveChanges();
                 transaction.Commit();
             }

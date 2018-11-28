@@ -8,10 +8,12 @@ namespace Common.Models
 
         public MapRectangle MapRectangle { get; set; }
 
+        public ZoneValidationRequest ValidationRequest { get; set; }
+
         public string OwnerId { get; set; }
 
         public bool IsConfirmed { get; set; }
-        
+
         public ZoneSettings Settings { get; set; }
     }
 }
