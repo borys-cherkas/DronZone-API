@@ -1,7 +1,10 @@
 ﻿using System.Threading.Tasks;
+using AutoMapper;
+using BusinessLayer.Filters;
 using BusinessLayer.Services.Abstractions;
 using Common.Constants;
 using Common.Models.Identity;
+using DronZone_API.ViewModels.Drone.List;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -27,12 +30,13 @@ namespace DronZone_API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUserDrones()
+        public async Task<IActionResult> GetUserDrones(DroneListFilterViewModel filterViewModel)
         {
             var identityUser = await _userManager.GetUserAsync(User);
             var person = await _personService.GetByIdAsync(identityUser.PersonId);
 
-            var drones = _droneService.GetDronesByPersonId(person.Id);
+            var filter = Mapper.Map<DroneListFilter>(filterViewModel);
+            var drones = _droneService.GetDronesByPersonId(person.Id, filter);
 
             foreach (var drone in drones)
             {

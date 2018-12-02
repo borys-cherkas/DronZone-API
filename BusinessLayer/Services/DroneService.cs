@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using BusinessLayer.Filters;
 using BusinessLayer.Services.Abstractions;
 using Common.Models;
 using Common.Models.Additional;
@@ -21,9 +23,11 @@ namespace BusinessLayer.Services
             return _droneRepository.GetAll(x => string.IsNullOrEmpty(x.OwnerId));
         }
 
-        public ICollection<Drone> GetDronesByPersonId(string personId)
+        public ICollection<Drone> GetDronesByPersonId(string personId, DroneListFilter filterViewModel)
         {
-            return _droneRepository.GetAll(x => x.OwnerId == personId);
+            var drones = _droneRepository.GetAll(x => x.OwnerId == personId);
+
+            return FilterDrones(drones, filterViewModel);
         }
 
         public Drone GetDroneByCode(string code)
@@ -92,6 +96,26 @@ namespace BusinessLayer.Services
 
                 _droneRepository.Add(drone);
             }
+        }
+
+        private ICollection<Drone> FilterDrones(ICollection<Drone> unfilteredDrones, DroneListFilter filter)
+        {
+            IEnumerable<Drone> filteredList = unfilteredDrones;
+
+            if (filter != null)
+            {
+                if (!string.IsNullOrEmpty(filter.DroneCode))
+                {
+                    filteredList = filteredList.Where(x => x.Code.ToLower().Contains(filter.DroneCode.ToLower()));
+                }
+
+                if (filter.DroneType.HasValue)
+                {
+                    filteredList = filteredList.Where(x => x.Type == (DroneType)filter.DroneType.Value);
+                }
+            }
+
+            return filteredList.ToList();
         }
     }
 }
