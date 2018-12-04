@@ -2,9 +2,12 @@
 
 namespace DronZone_API.ViewModels.Zone
 {
-    public class ModifyZoneValidationRequestViewModel : ZoneValidationRequestBaseViewModel
+    public class UpdateZoneNameViewModel
     {
         [Required]
         public string ZoneId { get; set; }
+
+        [Required]
+        public string ZoneName { get; set; }
     }
 }

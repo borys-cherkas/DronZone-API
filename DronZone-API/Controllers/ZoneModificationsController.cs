@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using BusinessLayer.Services;
 using BusinessLayer.Services.Abstractions;
@@ -6,6 +7,7 @@ using Common.Constants;
 using Common.Models;
 using Common.Models.Identity;
 using DronZone_API.ViewModels.Zone;
+using DronZone_API.ViewModels.ZoneValidationRequest;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -28,10 +30,27 @@ namespace DronZone_API.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> GetRequestById(string requestId)
+        {
+            var currentIdentityUser = await _userManager.GetUserAsync(User);
+            var currentPersonId = currentIdentityUser.PersonId;
+
+            var userRequest = _zoneValidationRequestService.GetRequestById(requestId, currentPersonId);
+
+            var viewModel = Mapper.Map<ZoneValidationRequestDetailedViewModel>(userRequest);
+            return Json(viewModel);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> GetUserRequests()
         {
-            // TODO: Implement
-            return Ok();
+            var currentIdentityUser = await _userManager.GetUserAsync(User);
+            var currentPersonId = currentIdentityUser.PersonId;
+
+            var userRequests = _zoneValidationRequestService.GetUserZoneRequests(currentPersonId);
+
+            var userRequestsListItems = Mapper.Map<ICollection<ZoneValidationRequestListItemViewModel>>(userRequests);
+            return Json(userRequestsListItems);
         }
 
         [Authorize(Roles = AppRoles.Administrator)]
@@ -43,7 +62,7 @@ namespace DronZone_API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateZoneRequest(AddZoneValidationRequestViewModel model)
+        public async Task<IActionResult> CreateAddingZoneRequest(AddZoneValidationRequestViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -61,7 +80,7 @@ namespace DronZone_API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ModifyZoneRequest(ModifyZoneValidationRequestViewModel model)
+        public async Task<IActionResult> CreateModifyingZoneRequest(ModifyZoneValidationRequestViewModel model)
         {
             if (ModelState.IsValid)
             {

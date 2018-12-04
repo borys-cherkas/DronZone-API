@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BusinessLayer.Services.Abstractions;
 using Common.Models;
@@ -18,6 +19,34 @@ namespace BusinessLayer.Services
         {
             _zoneValidationRequestRepository = zoneValidationRequestRepository;
             _zoneService = zoneService;
+        }
+
+        public ZoneValidationRequest GetRequestById(string requestId, string currentPersonId)
+        {
+            var request = _zoneValidationRequestRepository.GetSingleByPredicate(r => r.Id == requestId);
+            if (request == null)
+            {
+                throw new ArgumentException("Cannot find such validation request.");
+            }
+
+            if (request.RequesterId != currentPersonId)
+            {
+                throw new ArgumentException("You haven't access to see this request.");
+            }
+
+            return request;
+        }
+
+        public ICollection<ZoneValidationRequest> GetUserZoneRequests(string currentPersonId)
+        {
+            return _zoneValidationRequestRepository.GetAll(r => r.RequesterId == currentPersonId);
+        }
+
+        public ZoneValidationRequest GetActiveZoneRequest(string zoneId)
+        {
+            return _zoneValidationRequestRepository.GetSingleByPredicate(r => r.TargetZoneId != null 
+                                                                && r.TargetZoneId.Equals(zoneId, StringComparison.OrdinalIgnoreCase)
+                                                                && (r.Status == ZoneValidationStatus.InProgress || r.Status == ZoneValidationStatus.WaitingForAdministrator));
         }
 
 
@@ -45,11 +74,13 @@ namespace BusinessLayer.Services
             }
 
             var zoneRequests = _zoneValidationRequestRepository.FindByZoneId(dbZone.Id);
-            if (zoneRequests.Any(x => x.Status >= ZoneValidationStatus.Declined))
+            if (zoneRequests.Any(x => x.Status < ZoneValidationStatus.Declined))
             {
                 throw new ArgumentOutOfRangeException(nameof(dbZone.Id),
                     "Cannot add modifying request while has another active one for this zone.");
             }
+
+            zoneValidationRequest.RequesterId = requestPersonId;
             
             return _zoneValidationRequestRepository.Add(zoneValidationRequest);
         }

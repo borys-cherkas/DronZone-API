@@ -1,13 +1,12 @@
 ﻿using Common.Models.Additional;
 
-namespace Common.Models
+namespace DronZone_API.ViewModels.ZoneValidationRequest
 {
-    public class ZoneValidationRequest : ModelBase<string>
+    public class ZoneValidationRequestDetailedViewModel
     {
-        public ZoneValidationStatus Status { get; set; }
+        public string Id { get; set; }
 
-        public string RequesterId { get; set; }
-        public string ResponsiblePersonId { get; set; }
+        public ZoneValidationStatus Status { get; set; }
 
         public ZoneValidationType RequestType { get; set; }
 
@@ -15,10 +14,10 @@ namespace Common.Models
 
         /// <summary>
         /// Means related zone, which will be modified by this request.
-        /// Can be null if this request means zone creation (and hasn't been finished yet).
+        /// Can be null if this request means zone creation.
         /// </summary>
         public string TargetZoneId { get; set; }
-        
+
         public string ZoneName { get; set; }
 
         public double TopLeftLatitude { get; set; }

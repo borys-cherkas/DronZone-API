@@ -20,6 +20,8 @@ namespace BusinessLayer.Services.Abstractions
 
         void Update(Zone zone);
 
+        void UpdateZoneName(string modelZoneId, string modelZoneName, string currentPersonId);
+
         void DeleteWithValidationRequests(string zoneId);
     }
 }

@@ -20,7 +20,7 @@ namespace DataLayer.Repositories
 
         public ICollection<ZoneValidationRequest> FindByZoneId(string zoneId)
         {
-            return GetAll(x => x.TargetZoneId.Equals(zoneId, StringComparison.OrdinalIgnoreCase));
+            return GetAll(x => x.TargetZoneId != null && x.TargetZoneId.Equals(zoneId, StringComparison.OrdinalIgnoreCase));
         }
 
         public void DeleteAllZoneRequests(string zoneId)

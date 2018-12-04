@@ -84,6 +84,24 @@ namespace BusinessLayer.Services
             _mapRectanglesRepository.Update(mapRectangleToUpdate);
         }
 
+        public void UpdateZoneName(string zoneId, string zoneName, string personId)
+        {
+            var zoneToUpdate = GetZoneById(zoneId);
+            if (zoneToUpdate == null)
+            {
+                throw new InvalidDataException("There is no such zone to update.");
+            }
+
+            if (zoneToUpdate.OwnerId != personId)
+            {
+                throw new UnauthorizedAccessException("You haven't permissions to modify requests of this zone.");
+            }
+
+            zoneToUpdate.Name = zoneName;
+
+            _zoneRepository.Update(zoneToUpdate);
+        }
+
         public void DeleteWithValidationRequests(string zoneId)
         {
             var zone = GetZoneById(zoneId, q => q.Include(x => x.Settings).Include(x => x.MapRectangle));

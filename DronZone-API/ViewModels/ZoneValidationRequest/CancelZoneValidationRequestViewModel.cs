@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DronZone_API.ViewModels.Zone
+namespace DronZone_API.ViewModels.ZoneValidationRequest
 {
     public class CancelZoneValidationRequestViewModel
     {
