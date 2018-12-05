@@ -8,9 +8,6 @@ namespace DronZone_API.ViewModels.ZoneValidationRequest
         public string Reason { get; set; }
 
         [Required]
-        public string ZoneName { get; set; }
-
-        [Required]
         public double TopLeftLatitude { get; set; }
 
         [Required]

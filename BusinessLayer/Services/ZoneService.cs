@@ -18,7 +18,7 @@ namespace BusinessLayer.Services
 
         public ZoneService(
             IZoneRepository zoneRepository,
-            IZoneValidationRequestRepository zoneValidationRequestRepository, 
+            IZoneValidationRequestRepository zoneValidationRequestRepository,
             IMapRectanglesRepository mapRectanglesRepository)
         {
             _zoneRepository = zoneRepository;
@@ -46,6 +46,18 @@ namespace BusinessLayer.Services
             var zones = _zoneRepository.GetAll(x => x.OwnerId == personId && x.IsConfirmed);
 
             return FilterZones(zones, filter);
+        }
+
+        public bool ValidateName(string zoneId, string zoneName, string personId)
+        {
+            var trimmedName = zoneName?.Trim();
+
+            var hasNameAlreadyPresented = _zoneRepository.Any(x =>
+                x.Id != zoneId
+                && x.OwnerId == personId
+                && x.Name.Equals(trimmedName, StringComparison.OrdinalIgnoreCase));
+
+            return !hasNameAlreadyPresented;
         }
 
         public Zone Add(Zone zone)

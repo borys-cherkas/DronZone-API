@@ -80,6 +80,17 @@ namespace DronZone_API.Controllers
             return Json(viewModels);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> CheckIfNameAvailable(UpdateZoneNameViewModel model)
+        {
+            var currentIdentityUser = await _userManager.GetUserAsync(User);
+            var currentPersonId = currentIdentityUser.PersonId;
+
+            var isAvailable = _zoneService.ValidateName(model.ZoneId, model.ZoneName, currentPersonId);
+
+            return Json(new {isAvailable});
+        }
+
         [HttpPut]
         public async Task<IActionResult> UpdateZoneName(UpdateZoneNameViewModel model)
         {

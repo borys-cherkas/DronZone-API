@@ -18,7 +18,10 @@ namespace Common.Models
         /// Can be null if this request means zone creation (and hasn't been finished yet).
         /// </summary>
         public string TargetZoneId { get; set; }
-        
+
+        /// <summary>.
+        /// Can be null if this request means zone modifying.
+        /// </summary>
         public string ZoneName { get; set; }
 
         public double TopLeftLatitude { get; set; }

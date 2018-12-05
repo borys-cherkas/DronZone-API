@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using BusinessLayer.Services;
@@ -18,15 +19,18 @@ namespace DronZone_API.Controllers
     [Route("api/[controller]/[action]")]
     public class ZoneModificationsController : Controller
     {
+        private readonly IZoneService _zoneService;
         private readonly IZoneValidationRequestService _zoneValidationRequestService;
         private readonly UserManager<ApplicationUser> _userManager;
 
         public ZoneModificationsController(
             IZoneValidationRequestService zoneValidationRequestService,
+            IZoneService zoneService,
             UserManager<ApplicationUser> userManager)
         {
             _zoneValidationRequestService = zoneValidationRequestService;
             _userManager = userManager;
+            _zoneService = zoneService;
         }
 
         [HttpGet]
@@ -50,6 +54,13 @@ namespace DronZone_API.Controllers
             var userRequests = _zoneValidationRequestService.GetUserZoneRequests(currentPersonId);
 
             var userRequestsListItems = Mapper.Map<ICollection<ZoneValidationRequestListItemViewModel>>(userRequests);
+
+            foreach (var vm in userRequestsListItems.Where(x => !string.IsNullOrEmpty(x.TargetZoneId)))
+            {
+                var zone = _zoneService.GetZoneById(vm.TargetZoneId);
+                vm.ZoneName = zone.Name;
+            }
+
             return Json(userRequestsListItems);
         }
 

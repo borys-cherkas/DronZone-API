@@ -16,6 +16,8 @@ namespace BusinessLayer.Services.Abstractions
 
         ICollection<Zone> GetZonesByPersonId(string personId, ZoneListFilter filter);
 
+        bool ValidateName(string zoneId, string zoneName, string currentPersonId);
+
         Zone Add(Zone zone);
 
         void Update(Zone zone);
