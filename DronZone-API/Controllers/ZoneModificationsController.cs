@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DronZone_API.Controllers
 {
     [Authorize(Roles = AppRoles.User)]
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]/[action]/{id?}")]
     public class ZoneModificationsController : Controller
     {
         private readonly IZoneService _zoneService;
@@ -34,12 +34,12 @@ namespace DronZone_API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetRequestById(string requestId)
+        public async Task<IActionResult> GetRequestById(string id)
         {
             var currentIdentityUser = await _userManager.GetUserAsync(User);
             var currentPersonId = currentIdentityUser.PersonId;
 
-            var userRequest = _zoneValidationRequestService.GetRequestById(requestId, currentPersonId);
+            var userRequest = _zoneValidationRequestService.GetRequestById(id, currentPersonId);
 
             var viewModel = Mapper.Map<ZoneValidationRequestDetailedViewModel>(userRequest);
             return Json(viewModel);
