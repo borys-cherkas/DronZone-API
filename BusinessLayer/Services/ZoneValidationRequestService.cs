@@ -39,26 +39,29 @@ namespace BusinessLayer.Services
             return request;
         }
 
-        public ICollection<ZoneValidationRequest> GetUserZoneRequests(string currentPersonId)
+        public ICollection<ZoneValidationRequest> GetUserZoneRequests(string currentPersonId, ZoneValidationStatus status)
         {
-            return _zoneValidationRequestRepository.GetAll(r => r.RequesterId == currentPersonId);
+            return _zoneValidationRequestRepository.GetAll(r => r.RequesterId == currentPersonId && r.Status == status)
+                .OrderByDescending(r => r.Created).ToList();
         }
 
         public ICollection<ZoneValidationRequest> GetUntakenZoneRequests()
         {
             return _zoneValidationRequestRepository.GetAll(r =>
-                string.IsNullOrWhiteSpace(r.ResponsiblePersonId) && r.Status == ZoneValidationStatus.WaitingForAdministrator);
+                string.IsNullOrWhiteSpace(r.ResponsiblePersonId) && r.Status == ZoneValidationStatus.WaitingForAdministrator)
+                .OrderByDescending(r => r.Created).ToList();
         }
 
         public ICollection<ZoneValidationRequest> GetTakenByUserActiveZoneRequests(string userId)
         {
             return _zoneValidationRequestRepository.GetAll(r =>
-                r.ResponsiblePersonId == userId && r.Status == ZoneValidationStatus.InProgress);
+                r.ResponsiblePersonId == userId && r.Status == ZoneValidationStatus.InProgress)
+                .OrderByDescending(r => r.Created).ToList();
         }
 
         public ZoneValidationRequest GetActiveZoneRequest(string zoneId)
         {
-            return _zoneValidationRequestRepository.GetSingleByPredicate(r => r.TargetZoneId != null 
+            return _zoneValidationRequestRepository.GetSingleByPredicate(r => r.TargetZoneId != null
                                                                 && r.TargetZoneId.Equals(zoneId, StringComparison.OrdinalIgnoreCase)
                                                                 && (r.Status == ZoneValidationStatus.InProgress || r.Status == ZoneValidationStatus.WaitingForAdministrator));
         }
@@ -95,7 +98,7 @@ namespace BusinessLayer.Services
             }
 
             zoneValidationRequest.RequesterId = requestPersonId;
-            
+
             return _zoneValidationRequestRepository.Add(zoneValidationRequest);
         }
 
@@ -142,7 +145,6 @@ namespace BusinessLayer.Services
                 MapRectangle = new MapRectangle(),
                 Settings = new ZoneSettings(),
                 OwnerId = dbRequest.RequesterId,
-                IsConfirmed = true,
                 Name = dbRequest.ZoneName
             };
             zone.MapRectangle.TopLeftLatitude = dbRequest.TopLeftLatitude;

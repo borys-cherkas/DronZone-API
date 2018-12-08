@@ -4,14 +4,16 @@ using DataLayer.DbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DronZone_API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181208193207_AddedUpdatedField")]
+    partial class AddedUpdatedField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -288,12 +290,6 @@ namespace DronZone_API.Migrations
                     b.Property<string>("ZoneName");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("RequesterId");
-
-                    b.HasIndex("ResponsiblePersonId");
-
-                    b.HasIndex("TargetZoneId");
 
                     b.ToTable("ZoneValidationRequests");
                 });
@@ -612,24 +608,6 @@ namespace DronZone_API.Migrations
                     b.HasOne("Common.Models.Zone", "Zone")
                         .WithOne("Settings")
                         .HasForeignKey("Common.Models.ZoneSettings", "ZoneId")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("Common.Models.ZoneValidationRequest", b =>
-                {
-                    b.HasOne("Common.Models.Person", "Requester")
-                        .WithMany()
-                        .HasForeignKey("RequesterId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Common.Models.Person", "ResponsiblePerson")
-                        .WithMany()
-                        .HasForeignKey("ResponsiblePersonId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Common.Models.Zone", "TargetZone")
-                        .WithMany()
-                        .HasForeignKey("TargetZoneId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 

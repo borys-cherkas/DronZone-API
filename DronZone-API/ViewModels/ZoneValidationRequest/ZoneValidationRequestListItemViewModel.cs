@@ -1,4 +1,5 @@
 ﻿using Common.Models.Additional;
+using System;
 
 namespace DronZone_API.ViewModels.ZoneValidationRequest
 {
@@ -13,5 +14,7 @@ namespace DronZone_API.ViewModels.ZoneValidationRequest
         public ZoneValidationType RequestType { get; set; }
 
         public string ZoneName { get; set; }
+
+        public DateTime? Updated { get; set; }
     }
 }

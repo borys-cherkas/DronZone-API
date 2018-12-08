@@ -75,6 +75,7 @@ namespace DataLayer.Repositories
         public virtual TEntity Add(TEntity entity)
         {
             entity.Created = DateTime.UtcNow;
+            entity.Updated = DateTime.UtcNow;
 
             var entityEntry = DbSet.Add(entity);
             DbContext.SaveChanges();
@@ -84,6 +85,8 @@ namespace DataLayer.Repositories
 
         public virtual TEntity Update(TEntity entity)
         {
+            entity.Updated = DateTime.UtcNow;
+
             var entityEntry = DbSet.Update(entity);
             DbContext.SaveChanges();
 

@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using BusinessLayer.Services;
 using BusinessLayer.Services.Abstractions;
 using Common.Constants;
 using Common.Models;
@@ -58,12 +57,12 @@ namespace DronZone_API.Controllers
 
         [Authorize(Roles = AppRoles.User)]
         [HttpGet]
-        public async Task<IActionResult> GetUserRequests()
+        public async Task<IActionResult> GetUserRequests(ZoneValidationStatus requestStatus)
         {
             var currentIdentityUser = await _userManager.GetUserAsync(User);
             var currentPersonId = currentIdentityUser.PersonId;
 
-            var userRequests = _zoneValidationRequestService.GetUserZoneRequests(currentPersonId);
+            var userRequests = _zoneValidationRequestService.GetUserZoneRequests(currentPersonId, requestStatus);
 
             var userRequestsListItems = Mapper.Map<ICollection<ZoneValidationRequestListItemViewModel>>(userRequests);
 

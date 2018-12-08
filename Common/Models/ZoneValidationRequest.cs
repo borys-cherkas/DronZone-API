@@ -7,7 +7,10 @@ namespace Common.Models
         public ZoneValidationStatus Status { get; set; }
 
         public string RequesterId { get; set; }
+
+        public Person Requester { get; set; }
         public string ResponsiblePersonId { get; set; }
+        public Person ResponsiblePerson { get; set; }
 
         public ZoneValidationType RequestType { get; set; }
 
@@ -18,6 +21,8 @@ namespace Common.Models
         /// Can be null if this request means zone creation (and hasn't been finished yet).
         /// </summary>
         public string TargetZoneId { get; set; }
+
+        public Zone TargetZone { get; set; }
 
         /// <summary>.
         /// Can be null if this request means zone modifying.

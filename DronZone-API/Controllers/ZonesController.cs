@@ -23,7 +23,7 @@ namespace DronZone_API.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
 
         public ZonesController(
-            IZoneService zoneService, 
+            IZoneService zoneService,
             IZoneValidationRequestService zoneValidationRequestService,
             UserManager<ApplicationUser> userManager)
         {
@@ -54,14 +54,6 @@ namespace DronZone_API.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = AppRoles.Administrator)]
-        public IActionResult GetUnconfirmedZones()
-        {
-            var zones = _zoneService.GetAllUnconfirmedZones();
-            return Json(zones);
-        }
-
-        [HttpGet]
         public async Task<IActionResult> GetAllUserZones(ZoneListFilterViewModel filterViewModel)
         {
             var currentIdentityUser = await _userManager.GetUserAsync(User);
@@ -73,7 +65,7 @@ namespace DronZone_API.Controllers
             var viewModels = Mapper.Map<ICollection<ZoneListItemViewModel>>(zones);
             foreach (var vm in viewModels)
             {
-                var activeRequest =_zoneValidationRequestService.GetActiveZoneRequest(vm.Id);
+                var activeRequest = _zoneValidationRequestService.GetActiveZoneRequest(vm.Id);
                 vm.ValidationRequestId = activeRequest?.Id;
             }
 
@@ -88,7 +80,7 @@ namespace DronZone_API.Controllers
 
             var isAvailable = _zoneService.ValidateName(model.ZoneId, model.ZoneName, currentPersonId);
 
-            return Json(new {isAvailable});
+            return Json(new { isAvailable });
         }
 
         [HttpPut]

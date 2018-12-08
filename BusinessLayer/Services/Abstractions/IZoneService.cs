@@ -12,8 +12,6 @@ namespace BusinessLayer.Services.Abstractions
 
         ICollection<Zone> GetAllZones();
 
-        ICollection<Zone> GetAllUnconfirmedZones();
-
         ICollection<Zone> GetZonesByPersonId(string personId, ZoneListFilter filter);
 
         bool ValidateName(string zoneId, string zoneName, string currentPersonId);

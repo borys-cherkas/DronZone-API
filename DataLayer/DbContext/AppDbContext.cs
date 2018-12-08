@@ -75,6 +75,15 @@ namespace DataLayer.DbContext
             builder.Entity<Drone>()
                 .HasIndex(u => u.Code)
                 .IsUnique();
+
+            builder.Entity<ZoneValidationRequest>()
+                .HasOne(r => r.TargetZone);
+
+            builder.Entity<ZoneValidationRequest>()
+                .HasOne(r => r.Requester);
+
+            builder.Entity<ZoneValidationRequest>()
+                .HasOne(r => r.ResponsiblePerson);
         }
 
         private void DisableCascadeDeleting(ModelBuilder modelBuilder)

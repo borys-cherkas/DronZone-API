@@ -10,8 +10,6 @@ namespace Common.Models
 
         public string OwnerId { get; set; }
 
-        public bool IsConfirmed { get; set; }
-
         public ZoneSettings Settings { get; set; }
     }
 }

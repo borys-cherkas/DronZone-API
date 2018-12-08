@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Common.Models;
+using Common.Models.Additional;
 
 namespace BusinessLayer.Services.Abstractions
 {
@@ -7,7 +8,7 @@ namespace BusinessLayer.Services.Abstractions
     {
         ZoneValidationRequest GetRequestById(string requestId, string currentPersonId);
 
-        ICollection<ZoneValidationRequest> GetUserZoneRequests(string currentPersonId);
+        ICollection<ZoneValidationRequest> GetUserZoneRequests(string currentPersonId, ZoneValidationStatus status);
 
         ICollection<ZoneValidationRequest> GetUntakenZoneRequests();
 
