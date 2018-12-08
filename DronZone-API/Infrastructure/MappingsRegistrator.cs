@@ -34,6 +34,8 @@ namespace DronZone_API.Infrastructure
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Reason))
                 .ForMember(dest => dest.TargetZoneId, opt => opt.MapFrom(src => src.ZoneId));
 
+            mapper.CreateMap<ZoneValidationRequest, AdminRequestListItemViewModel>();
+
             mapper.CreateMap<ZoneValidationRequest, ZoneValidationRequestListItemViewModel>();
 
             mapper.CreateMap<ZoneValidationRequest, ZoneValidationRequestDetailedViewModel>();

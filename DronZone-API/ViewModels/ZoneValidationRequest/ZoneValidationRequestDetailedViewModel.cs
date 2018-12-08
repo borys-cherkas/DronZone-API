@@ -12,6 +12,8 @@ namespace DronZone_API.ViewModels.ZoneValidationRequest
 
         public string Description { get; set; }
 
+        public bool CanConfirmReject { get; set; }
+
         /// <summary>
         /// Means related zone, which will be modified by this request.
         /// Can be null if this request means zone creation.

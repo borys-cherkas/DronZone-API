@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Common.Models;
 
 namespace BusinessLayer.Infrastructure
 {
@@ -13,9 +14,7 @@ namespace BusinessLayer.Infrastructure
 
         private static void RegisterSomeEntityMappings(IMapperConfigurationExpression mapper)
         {
-            //mapper.CreateMap<AddKindOfSportViewModel, KindOfSport>()
-            //    .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.SportName))
-            //    .ReverseMap();
+            mapper.CreateMap<ZoneValidationRequest, Zone>().ReverseMap();
         }
     }
 }

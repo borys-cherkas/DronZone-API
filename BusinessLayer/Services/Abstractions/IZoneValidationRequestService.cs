@@ -9,6 +9,10 @@ namespace BusinessLayer.Services.Abstractions
 
         ICollection<ZoneValidationRequest> GetUserZoneRequests(string currentPersonId);
 
+        ICollection<ZoneValidationRequest> GetUntakenZoneRequests();
+
+        ICollection<ZoneValidationRequest> GetTakenByUserActiveZoneRequests(string userId);
+
         ZoneValidationRequest GetActiveZoneRequest(string zoneId);
 
         ZoneValidationRequest CreateNewZoneRequest(
@@ -17,6 +21,11 @@ namespace BusinessLayer.Services.Abstractions
         ZoneValidationRequest CreateModifyZoneRequest(
             ZoneValidationRequest zoneValidationRequest, string personId);
 
-        void CancelZoneRequest(string modelRequestId, string currentPersonId);
+        void AssignToUser(string requestId, string currentPersonId);
+
+        void ConfirmZoneRequest(string requestId, string currentPersonId);
+        void DeclineZoneRequest(string requestId, string currentPersonId);
+
+        void CancelZoneRequest(string requestId, string currentPersonId);
     }
 }
