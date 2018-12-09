@@ -35,7 +35,7 @@ namespace DataLayer.DbContext
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(DbConstants.AzureConnectionString);
+            optionsBuilder.UseSqlServer(DbConstants.AmazonConnectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
