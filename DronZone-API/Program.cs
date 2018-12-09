@@ -16,10 +16,7 @@ namespace DronZone_API
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseKestrel()
                 .UseApplicationInsights()
-                .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseIISIntegration()
                 .UseStartup<Startup>()
                 .Build();
     }

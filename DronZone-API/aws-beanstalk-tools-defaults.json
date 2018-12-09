@@ -1,11 +1,11 @@
 
 {
     "comment" : "This file is used to help set default values when using the dotnet CLI extension Amazon.ElasticBeanstalk.Tools. For more information run \"dotnet eb --help\" from the project root.",
-    "profile" : "TanyaAccount",
-    "region"  : "us-east-1",
+    "profile" : "TanyaAccNew",
+    "region"  : "us-west-2",
     "application" : "DronZoneAPI",
-    "environment" : "DronZoneAPI-dev",
-    "cname"       : "dronzoneapi-dev",
+    "environment" : "Dronzone",
+    "cname"       : "dronzone",
     "solution-stack" : "64bit Windows Server 2016 v1.2.0 running IIS 10.0",
     "environment-type" : "SingleInstance",
     "instance-profile" : "aws-elasticbeanstalk-ec2-role",
