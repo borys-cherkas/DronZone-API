@@ -3,11 +3,24 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <RootNamespace>DronZone_API</RootNamespace>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="dronzone-api-app\**" />
+    <Content Remove="dronzone-api-app\**" />
+    <EmbeddedResource Remove="dronzone-api-app\**" />
+    <None Remove="dronzone-api-app\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="Migrations\20181128090952_ZoneValidationRequest.cs" />
     <Compile Remove="Migrations\20181128090952_ZoneValidationRequest.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="bundle1.zip" />
+    <None Remove="dronzone-api-app.zip" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +40,11 @@
     <PackageReference Include="OpenIddict" Version="2.0.0" />
     <PackageReference Include="OpenIddict.EntityFrameworkCore" Version="2.0.0" />
     <PackageReference Include="OpenIddict.Server" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="web.config" CopyToPublishDirectory="Always" />
   </ItemGroup>
 
   <ItemGroup>

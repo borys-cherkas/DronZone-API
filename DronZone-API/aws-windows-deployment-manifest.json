@@ -1,0 +1,14 @@
+{
+  "manifestVersion": 1,
+  "deployments": {
+    "aspNetCoreWeb": [
+      {
+        "name": "dronzone-api-app",
+        "parameters": {
+          "appBundle": "dronzone-api-app.zip",
+          "iisPath": "/"
+        }
+      }
+    ]
+  }
+}
